@@ -24,7 +24,7 @@ model User {
 model Profile {
   id     Int    @id @default(autoincrement())
   bio    String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId Int    @unique
 }
 
@@ -36,24 +36,24 @@ model Job {
   jobSummary     String
   jobDescription String
   createdAt      DateTime         @default(now())
-  company        Company          @relation(fields: [companyId], references: [id])
+  company        Company          @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   companyId      Int
   jobApplication JobApplication[]
 }
 
 model Detail {
   id      Int    @id @default(autoincrement())
-  job     Job    @relation(fields: [jobId], references: [id])
-  jobId   Int
+  job     Job    @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  jobId   Int    
   content String
 }
 
 model JobApplication {
-  id        Int      @id @default(autoincrement())
-  job       Job      @relation(fields: [jobId], references: [id])
-  jobId     Int
+  id        Int      @id @default(autoincrement()) 
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  jobId     Int      @unique
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    Int
 }
 
@@ -72,9 +72,9 @@ model Company {
 
 model Review {
   id        Int      @id @default(autoincrement())
-  company   Company  @relation(fields: [companyId], references: [id])
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   companyId Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    Int
   rating    Int
   content   String
