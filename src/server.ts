@@ -347,35 +347,6 @@ app.get("/users", async (req, res) => {
   const users = await prisma.user.findMany();
   res.send(users);
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
-//get reviews by id
-app.get("/reviews/:id", async (req, res) => {
-  const review = await prisma.review.findUnique({
-    where: { id: Number(req.params.id) }
-  });
-  if (review) {
-    res.send(review);
-  } else {
-    res.status(404).send({ error: "Review not found." });
-  }
-});
-//get company by id
-app.get("/companies/:id", async (req, res) => {
-  const company = await prisma.company.findUnique({
-    where: { id: Number(req.params.id) }
-  });
-  //comment
-  if (company) {
-    res.send(company);
-  } else {
-    res.status(404).send({ error: "Company not found." });
-  }
-});
-=======
->>>>>>> 191477dfd095140bc265031346d9e4d0f8d50686
-=======
->>>>>>> 191477dfd095140bc265031346d9e4d0f8d50686
 
 //post reviews
 app.post("/reviews", async (req, res) => {
