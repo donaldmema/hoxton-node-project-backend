@@ -348,6 +348,7 @@ app.get("/users", async (req, res) => {
   res.send(users);
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 //get reviews by id
 app.get("/reviews/:id", async (req, res) => {
   const review = await prisma.review.findUnique({
@@ -371,6 +372,8 @@ app.get("/companies/:id", async (req, res) => {
     res.status(404).send({ error: "Company not found." });
   }
 });
+=======
+>>>>>>> 191477dfd095140bc265031346d9e4d0f8d50686
 =======
 >>>>>>> 191477dfd095140bc265031346d9e4d0f8d50686
 
