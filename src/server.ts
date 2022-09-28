@@ -342,6 +342,54 @@ app.post("/jobs", async (req, res) => {
   }
 });
 
+//get all users
+app.get("/users", async (req, res) => {
+  const users = await prisma.user.findMany();
+  res.send(users);
+});
+
+//post reviews
+app.post("/reviews", async (req, res) => {
+  const reviews = {
+    content: req.body.content,
+    companyId: req.body.companyId,
+    userId: req.body.userId,
+    rating: req.body.rating,
+  };
+  let errors: string[] = [];
+
+  if (typeof req.body.content !== "string") {
+    errors.push("Add a proper content!");
+  }
+  if (typeof req.body.companyId !== "number") {
+    errors.push("Add a proper company Id!");
+  }
+  if (typeof req.body.userId !== "number") {
+    errors.push("Add a proper user Id");
+  }
+  if (typeof req.body.rating !== "number") {
+    errors.push("Add a proper rating");
+  }
+  if (errors.length === 0) {
+    try {
+      const newReview = await prisma.review.create({
+        data: {
+          content: reviews.content,
+          companyId: reviews.companyId,
+          userId: reviews.userId,
+          rating: reviews.rating,
+        },
+      });
+      res.send(newReview);
+    } catch (err) {
+      // @ts-ignore
+      res.status(400).send(err.message);
+    }
+  } else {
+    res.status(400).send({ errors: errors });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening to http://localhost:${port}`);
 });
