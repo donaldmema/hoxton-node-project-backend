@@ -34,6 +34,7 @@ app.get("/companies/:id", async (req, res) => {
   const company = await prisma.company.findUnique({
     where: { id: Number(req.params.id) }
   });
+  //comment
   if (company) {
     res.send(company);
   } else {
