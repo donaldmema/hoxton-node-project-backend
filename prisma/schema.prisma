@@ -44,14 +44,14 @@ model Job {
 model Detail {
   id      Int    @id @default(autoincrement())
   job     Job    @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  jobId   Int    
-  content String
+  jobId   Int
+  content String @unique
 }
 
 model JobApplication {
-  id        Int      @id @default(autoincrement()) 
+  id        Int      @id @default(autoincrement())
   job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  jobId     Int      @unique
+  jobId     Int
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    Int
