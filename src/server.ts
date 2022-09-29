@@ -215,6 +215,22 @@ app.get("/companies", async (req, res) => {
   }
 });
 
+app.get("/companies/:companyName", async (req, res) => {
+  try {
+    const { companyName } = req.params;
+
+    const companies = await prisma.company.findMany({
+      where: { name: { contains: companyName } },
+      include: { reviews: true, jobs: true },
+    });
+
+    res.send(companies);
+  } catch (error) {
+    // @ts-ignore
+    res.status(500).send({ error: error.message });
+  }
+});
+
 //This endpoint will get company by id
 app.get("/companies/:id", async (req, res) => {
   try {
