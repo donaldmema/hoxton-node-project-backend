@@ -215,12 +215,12 @@ app.get("/companies", async (req, res) => {
   }
 });
 
-app.get("/companies/:companyName", async (req, res) => {
+app.get("/companies/company/:name", async (req, res) => {
   try {
-    const { companyName } = req.params;
+    const { name } = req.params;
 
     const companies = await prisma.company.findMany({
-      where: { name: { contains: companyName } },
+      where: { name: { contains: name } },
       include: { reviews: true, jobs: true },
     });
 
