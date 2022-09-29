@@ -59,7 +59,9 @@ app.post("/sign-up", async (req, res) => {
         },
       });
 
-      res.send(user), generateToken(user.id);
+      const token = generateToken(user.id);
+
+      res.send({ user, token });
     }
   } catch (error) {
     // @ts-ignore
@@ -117,12 +119,12 @@ app.get("/validate", async (req, res) => {
 });
 
 //This endpoint will get all jobs which contain the search term as a job title
-app.get("/jobs/:jobTitle", async (req, res) => {
+app.get("/job/:title", async (req, res) => {
   try {
-    const { jobTitle } = req.params;
+    const { title } = req.params;
 
     const jobs = await prisma.job.findMany({
-      where: { title: { contains: jobTitle } },
+      where: { title: { contains: title } },
       include: { company: true, details: true },
     });
 
@@ -134,12 +136,12 @@ app.get("/jobs/:jobTitle", async (req, res) => {
 });
 
 //This endpoint will get all jobs which contain the search term as a job location
-app.get("/jobs/:jobLocation", async (req, res) => {
+app.get("/jobs/:location", async (req, res) => {
   try {
-    const { jobLocation } = req.params;
+    const { location } = req.params;
 
     const jobs = await prisma.job.findMany({
-      where: { location: { contains: jobLocation } },
+      where: { location: { contains: location } },
       include: { company: true, details: true },
     });
 
@@ -185,7 +187,7 @@ app.get("/jobs", async (req, res) => {
 });
 
 //This endpoint will get job by id
-app.get("/jobs/:id", async (req, res) => {
+app.get("/job-detail/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
